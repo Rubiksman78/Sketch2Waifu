@@ -16,4 +16,4 @@ def plot_image(path):
     plt.subplot(122), plt.imshow(edges), plt.title('Edge')
     plt.show()
 
-plot_image("D:/Datasets/anime_face/0000001.jpg")
+#plot_image("D:/Datasets/anime_face/0000001.jpg")

@@ -7,11 +7,10 @@ import numpy as np
 import torchvision.transforms.functional as F
 from torch.utils.data import DataLoader
 from PIL import Image
-from scipy.misc import imread
 from skimage.feature import canny
 from skimage.color import rgb2gray
-import cv2 as cv
-from color_domain import k_means
+import cv2
+from preprocess.color_domain import k_means
 
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, config, flist, augment=False, training=False):
@@ -19,9 +18,9 @@ class Dataset(torch.utils.data.Dataset):
         self.augment = augment
         self.training = training
         self.data = self.load_flist(flist)
-        self.input_size = config.INPUT_SIZE
-        self.sigma = config.SIGMA
-        self.km = config.KM
+        self.input_size = config['INPUT_SIZE']
+        self.sigma = config['SIGMA']
+        self.km = config['KM']
 
     def __len__(self):
         return len(self.data)
@@ -41,7 +40,7 @@ class Dataset(torch.utils.data.Dataset):
     def load_item(self, index):
         size = self.input_size
         # load image
-        img = imread(self.data[index])
+        img = cv2.imread(self.data[index],cv2.COLOR_BGR2RGB)
         # resize/crop if needed
         if size != 0:
             img = self.resize(img, size, size)
@@ -55,11 +54,14 @@ class Dataset(torch.utils.data.Dataset):
             img_gray = img_gray[:, ::-1, ...]
             edge = edge[:, ::-1, ...]
         # To get color domain
-        random_blur = 25
-        img_color_domain = cv.medianBlur(img, random_blur)
-        K = self.km
+        random_blur = 2 * np.random.randint(7, 18) + 1
+        #random_blur = 25
+        img_color_domain = cv2.medianBlur(img, random_blur)
+        #K = self.km
+        K = np.random.randint(2, 6)
         img_color_domain = k_means(img_color_domain, K)
-        img_color_domain = cv.medianBlur(img_color_domain, 3)
+        img_color_domain = cv2.medianBlur(img_color_domain, np.random.randint(1, 4) * 2 - 1)
+        #img_color_domain = cv2.medianBlur(img_color_domain, 3)
         return self.to_tensor(img), self.to_tensor(img_gray), self.to_tensor(edge), self.to_tensor(img_color_domain)
 
     def load_edge(self, img, index):
@@ -82,7 +84,7 @@ class Dataset(torch.utils.data.Dataset):
             j = (imgh - side) // 2
             i = (imgw - side) // 2
             img = img[j:j + side, i:i + side, ...]
-        img = scipy.misc.imresize(img, [height, width], interp=interp)
+        img = cv2.resize(img, [height, width])
         return img
 
     def load_flist(self, flist):

@@ -35,4 +35,9 @@ def plot_image(path, kernel_size, k):
     plt.axis('off')
     plt.show()
 
-plot_image("D:/Datasets/anime_face/0000002.jpg", 50, 2)
+#This function applies a binary random mask which will not cover more than 70% area
+def random_mask(img):
+    mask = np.random.binomial(1, 0.7, img.shape).astype(np.float)
+    return mask
+
+#plot_image("D:/Datasets/anime_face/0000002.jpg", 50, 2)
