@@ -1,0 +1,12 @@
+torch
+torchsummary
+torchvision
+scipy
+matplotlib
+numpy
+python-opencv
+pillow
+skimage
+tqdm
+argparse
+easygui
