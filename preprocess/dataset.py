@@ -54,14 +54,14 @@ class Dataset(torch.utils.data.Dataset):
             img_gray = img_gray[:, ::-1, ...]
             edge = edge[:, ::-1, ...]
         # To get color domain
-        random_blur = 2 * np.random.randint(7, 18) + 1
-        #random_blur = 25
+        #random_blur = 2 * np.random.randint(7, 18) + 1
+        random_blur = 25
         img_color_domain = cv2.medianBlur(img, random_blur)
-        #K = self.km
-        K = np.random.randint(2, 6)
+        K = self.km
+        #K = np.random.randint(2, 6)
         img_color_domain = k_means(img_color_domain, K)
-        img_color_domain = cv2.medianBlur(img_color_domain, np.random.randint(1, 4) * 2 - 1)
-        #img_color_domain = cv2.medianBlur(img_color_domain, 3)
+        #img_color_domain = cv2.medianBlur(img_color_domain, np.random.randint(1, 4) * 2 - 1)
+        img_color_domain = cv2.medianBlur(img_color_domain, 3)
         return self.to_tensor(img), self.to_tensor(img_gray), self.to_tensor(edge), self.to_tensor(img_color_domain)
 
     def load_edge(self, img, index):

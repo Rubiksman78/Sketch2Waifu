@@ -1,11 +1,10 @@
-config = {
-    'MODE': 1,                      # 1: train, 2: test, 3: eval, 5: drawing
-    'SEED': 10,                     # random seed
-    'GPU': [0],                     # list of gpu ids
-    'DEBUG': 0,                     # turns on debugging mode
-    'VERBOSE': 0,                   # turns on verbose mode in the output console
-
+DEFAULT_CONFIG = {
     'INPUT_SIZE': 128,              # input image size for training 0 for original size
     'SIGMA': 2.5,                     # standard deviation of the Gaussian filter used in Canny edge detector (0: random, -1: no edge)
     'KM': 3,
+    'NUM_SAMPLES':500, 
+    'N_CHANNELS':4,
+    'LR':1e-3,
+    'N_EPOCHS':100,
+    'BATCH_SIZE':4,
 }

@@ -53,7 +53,7 @@ def disc_loss(real_output,real_label,fake_output):
     fake_loss = torch.mean((fake_output)**2)
     return 0.5*real_loss + 0.5*fake_loss
 
-def gen_loss(fake_im,fake_output,real_label,real_im,M,device,alpha=1,beta=.01,gamma=1,delta=150):
+def gen_loss(fake_im,fake_output,real_label,real_im,M,device,alpha=1,beta=.1,gamma=1,delta=0):
     loss_adv = 0.5*torch.mean((fake_output - real_label)**2)
     loss_per_pixel = F_sum(real_im)/F_sum(M) * nn.L1Loss()(fake_im,M * real_im)
     feat_loss,style_loss = VGGPerceptualLoss().to(device)(fake_im,real_im)
