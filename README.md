@@ -1,10 +1,10 @@
 # Sketch2Waifu
 
-Unofficial implementation of Pi-Rec: https://arxiv.org/abs/1903.10146.
+Unofficial implementation of Pi-Rec: https://arxiv.org/abs/1903.10146. 
 
 ```
 Ever dreamt to be a mangaka or just to create the waifu of your dreams completely customed ?
-Now it is possible and you don't even need talent to make a sketch of your character ! 
+Now it is possible and you don't even need talent to make a sketch of your character ! :tada: :tada:
 ```
 
 The model is just a pix2pix GAN trained on low level representations of illustrations with raw edges and blurry color domains.
